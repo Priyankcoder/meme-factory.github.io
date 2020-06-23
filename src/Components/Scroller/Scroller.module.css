@@ -1,0 +1,21 @@
+.container{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: visible;
+    height: 20vh;
+    width: 100%;
+    margin-top: 2vh;
+    align-items: center;
+    
+
+}
+.memeimg{
+    border: 1px solid black;
+    margin-right: 1vw;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    height: 80%;
+    cursor: pointer;
+}

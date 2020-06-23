@@ -1,0 +1,19 @@
+.container{
+   display: flex;
+   width: 40%;
+   margin-left: 5vw;
+   border: 2px solid black;
+   position: relative;
+   overflow: hidden;
+
+
+}
+
+.txt{
+   -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+   user-select: none;
+   transition: linear;
+}
+
