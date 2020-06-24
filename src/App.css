@@ -1,0 +1,62 @@
+*{
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+.app {
+  display: flex;
+  width: 98%;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.playground{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  margin-top: 10vh;
+
+}
+.download{
+  display: none;
+  width: 80%;
+  margin: 2vh auto;
+
+}
+.prepare{
+  display: none;
+  /* height: 50px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: 3vw; */
+}
+.button{
+  width: fit-content;
+  border: 1px solid rgb(59, 138, 217);
+  background-color: rgb(59, 138, 217);
+  box-shadow: 0px 4px 0px rgb(214, 214, 214);
+  cursor: pointer;
+  border-radius: 5px;
+  color: white;
+  padding: 5px;
+  transition: all 0.2s ease-in-out;
+}
+.button:active{
+  transform: translateY(4px);
+  box-shadow: 0px 0px rgb(117, 117, 117);
+  /* border: 2px solid black; */
+}
+.tool{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 6vw;
+
+}
+/* .tool > *{
+  margin-bottom: 1vh;
+} */

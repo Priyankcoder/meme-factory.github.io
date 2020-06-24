@@ -1,8 +1,9 @@
 import React from 'react';
-import styles from './App.module.css';
+import './App.css';
 import {fetchMemes} from './Api'
 import {Canvas, Scroller, Form} from './Components'
 import axios from 'axios';
+import {Button} from '@material-ui/core';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -30,7 +31,6 @@ class App extends React.Component {
   async handleSelection(target){
     const data = await(target.dataset);
     this.setState({ choosen: data });
-
   }
   async handleDownload(){
     const params = (boxes) => {
@@ -42,11 +42,20 @@ class App extends React.Component {
       });
       return string;
     }
-    const result = await fetch(
+    const resultUrl = await fetch(
       `https://api.imgflip.com/caption_image?template_id=${this.state.choosen.id}&username=crispycapsicum&password=priyank123${params(this.state.boxes)}`
-    )
-    const json = await result.json();
-    console.log(json.data.url);
+    ).then((result)=>result.json())
+     .then((json)=>json.data.url);
+     console.log(resultUrl);
+    // var fileDownload = require("js-file-download");
+    this.setState((state)=>{
+      return {url: resultUrl}
+    })
+    const download = document.querySelectorAll(".download");
+    download.forEach((ele)=>ele.style.display = "flex")
+     
+
+    
   }
   
   async handleText(){
@@ -59,6 +68,8 @@ class App extends React.Component {
         {text: "Hello",x: 0, y: 0, width: widthConst*38, height: heightConst*19}
       ), fontSize: state.fontSize.concat(20)}
     })
+    const ele = document.querySelector(".prepare");
+    ele.style.display = "flex";
 
   }
 
@@ -96,9 +107,6 @@ class App extends React.Component {
     const value = event.target.value;
     console.log(value)
     const ball =  document.getElementById(`t${id}`);
-    // console.log(ball)
-    // console.log(width);
-    // console.log(height);
     this.setState((state,props) => {
       let newFont = state.fontSize;
       newFont[id] = value;
@@ -116,39 +124,74 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className={styles.App} key = "1">
+      <div className="app" key="1">
         <Scroller
           memes={this.state.displayList}
           handleSelection={this.handleSelection}
         />
-        <button onClick={this.handleDisplayList}>More</button>
-        <div className={styles.playground}>
+
+        <a
+          variant="contained"
+          color="primary"
+          onClick={this.handleDisplayList}
+          className="button"
+          style={{ marginLeft: "auto", marginRight: "10px" }}
+        >
+          More
+        </a>
+
+        <div className="playground">
           {this.state.choosen !== "" ? (
             <Canvas
               selected={this.state.choosen}
               boxes={this.state.boxes}
               handleDimension={this.handleDimension}
-              fontSize = {this.state.fontSize}
+              fontSize={this.state.fontSize}
             />
           ) : (
             ""
           )}
-          <div>
+          <div className="tool">
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {this.state.choosen !== "" ? (
+                this.state.boxes.length <= 4 ? (
+                  <a
+                    className="button"
+                    onClick={this.handleText}
+                    style={{ marginBottom: "4vh" }}
+                  >
+                    Text Box
+                  </a>
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
+
+              <a
+                onClick={this.handleDownload}
+                style={{ marginBottom: "4vh" }}
+                className="prepare button"
+              >
+                Generate Meme
+              </a>
+            </div>
             {this.state.choosen !== "" ? (
-              <button onClick={this.handleText}>Text Box</button>
+              <Form
+                boxes={this.state.boxes}
+                handleInput={this.handleInput}
+                fontSize={this.state.fontSize}
+                handleFontSize={this.handleFontSize}
+              />
             ) : (
               ""
             )}
-            {this.state.choosen !== "" ? <Form boxes={this.state.boxes} handleInput = {this.handleInput} fontSize = {this.state.fontSize} handleFontSize = {this.handleFontSize}/> : ""}
           </div>
-
-          <a
-            href={this.state.url}
-            target="_blank"
-            onClick={this.handleDownload}
-          >
-            Download
-          </a>
+        </div>
+        <h1 className="download">Result</h1>
+        <div className="download">
+          <img src={this.state.url} alt="" width="100%" />
         </div>
       </div>
     );

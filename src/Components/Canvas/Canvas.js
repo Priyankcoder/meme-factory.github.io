@@ -1,5 +1,8 @@
 import React from "react";
-import styles from './Canvas.module.css'
+import styles from './Canvas.module.css';
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+
+
 
 
 
@@ -34,15 +37,11 @@ const Canvas = ({selected, boxes, handleDimension, fontSize}) => {
     // (3) drop the ball, remove unneeded handlers
     ball.onmouseup = function () {
       imgBox.removeEventListener("mousemove", onMouseMove);
-      ball.onmouseup = null;
-      
+      ball.onmouseup = null;  
       const x = ball.offsetLeft - imgBox.offsetLeft;
       const y = ball.offsetTop - imgBox.offsetTop;
       const width = ball.offsetWidth;
       const height = ball.offsetHeight;
-      // console.log(width);
-      // console.log(height);
-      console.log(ball.id);
       handleDimension(ball.id, x, y, width, height);
     }
   }
@@ -56,7 +55,7 @@ const Canvas = ({selected, boxes, handleDimension, fontSize}) => {
         position: "absolute",
         overflow: "hidden",
         cursor: "grab",
-        fontSize: `${fontSize[ind]}px`
+        fontSize: `${fontSize[ind]}px`,
       };
       return (
         <div
@@ -67,16 +66,17 @@ const Canvas = ({selected, boxes, handleDimension, fontSize}) => {
           id={id}
           onDragStart={() => false}
         >
-          {obj.text}
+          {obj.txt}
         </div>
       );
+      
     });
     return html;
   } 
   return (
     <div className={styles.container} id = "canvas">
       <img src={selected.url} alt="" width="100%" id = "img" draggable = "false" />
-      {boxes.length!=0 ? textOnCanvas(boxes, fontSize) : ""}
+      {boxes.length!==0 ? textOnCanvas(boxes, fontSize) : ""}
     </div>
   );
   
