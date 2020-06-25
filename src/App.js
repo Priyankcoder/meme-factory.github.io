@@ -3,11 +3,13 @@ import './App.css';
 import {fetchMemes} from './Api'
 import {Canvas, Scroller, Form} from './Components'
 import axios from 'axios';
-import {Button} from '@material-ui/core';
+import { Button} from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import circle from './images/circle.svg'
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = { all: [], choosen: "", onDisplay: 2, displayList: [], url: "", boxes: [], fontSize: [] };
+    this.state = { all: [], choosen: "", onDisplay: 20, displayList: [], url: "", boxes: [], fontSize: [] };
     this.handleDisplayList = this.handleDisplayList.bind(this);
     this.handleSelection = this.handleSelection.bind(this);
     this.handleText = this.handleText.bind(this);
@@ -21,11 +23,11 @@ class App extends React.Component {
   async componentDidMount() {
     const memes = await fetchMemes();
       console.log(memes);
-      this.setState({all:memes, displayList: memes.slice(0,2)});
+      this.setState({all:memes, displayList: memes.slice(0,20)});
   }
   handleDisplayList(){
     const {all, choosen, onDisplay, displayList}= this.state
-    this.setState({onDisplay: onDisplay+2, displayList: displayList.concat(all.slice(onDisplay, onDisplay+2))});
+    this.setState({onDisplay: onDisplay+20, displayList: displayList.concat(all.slice(onDisplay, onDisplay+20))});
     
   }
   async handleSelection(target){
@@ -33,6 +35,7 @@ class App extends React.Component {
     this.setState({ choosen: data });
   }
   async handleDownload(){
+    // document.getElementById("generate-txt").style.display = "none";
     const params = (boxes) => {
       let string = "";
       boxes.map((obj, ind) => {
@@ -53,6 +56,7 @@ class App extends React.Component {
     })
     const download = document.querySelectorAll(".download");
     download.forEach((ele)=>ele.style.display = "flex")
+    document.querySelector(".prepare").textContent = "Scroll Down for Result"
      
 
     
@@ -125,6 +129,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app" key="1">
+        <h1>MEME FACTORY</h1>
         <Scroller
           memes={this.state.displayList}
           handleSelection={this.handleSelection}
@@ -173,8 +178,9 @@ class App extends React.Component {
                 onClick={this.handleDownload}
                 style={{ marginBottom: "4vh" }}
                 className="prepare button"
+                id = "generate"
               >
-                Generate Meme
+                <span id="generate-txt">Generate Meme</span>
               </a>
             </div>
             {this.state.choosen !== "" ? (

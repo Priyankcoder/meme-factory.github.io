@@ -51,6 +51,9 @@ const Canvas = ({selected, boxes, handleDimension, fontSize}) => {
       const styling = {
         display: "flex",
         width: "fit-content",
+        maxWidth: `${selected.width}px`,
+        // wordWrap: "break-word",
+        wordBreak: "break-all",
         height: "fit-content",
         position: "absolute",
         overflow: "hidden",
@@ -66,7 +69,7 @@ const Canvas = ({selected, boxes, handleDimension, fontSize}) => {
           id={id}
           onDragStart={() => false}
         >
-          {obj.txt}
+          {obj.text}
         </div>
       );
       
