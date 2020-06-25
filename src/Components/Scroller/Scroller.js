@@ -20,7 +20,6 @@ const Scroller = ({memes, handleSelection}) => {
       }}
     />
   ));
-  console.log(memesImg);
   return (
     <div className = {styles.container}>
       {memesImg}

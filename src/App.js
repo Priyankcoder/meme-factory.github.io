@@ -5,7 +5,8 @@ import {Canvas, Scroller, Form} from './Components'
 import axios from 'axios';
 import { Button} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import circle from './images/circle.svg'
+import circle from './images/circle.svg';
+import factory from'./factory.svg';
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -31,6 +32,7 @@ class App extends React.Component {
     
   }
   async handleSelection(target){
+    document.querySelector(".prepare").textContent = "Generate Meme";
     const data = await(target.dataset);
     this.setState({ choosen: data });
   }
@@ -74,6 +76,7 @@ class App extends React.Component {
     })
     const ele = document.querySelector(".prepare");
     ele.style.display = "flex";
+    ele.textContent = "Generate Meme"
 
   }
 
@@ -127,77 +130,108 @@ class App extends React.Component {
 
 
   render() {
+
     return (
-      <div className="app" key="1">
-        <h1>MEME FACTORY</h1>
-        <Scroller
-          memes={this.state.displayList}
-          handleSelection={this.handleSelection}
-        />
-
-        <a
-          variant="contained"
-          color="primary"
-          onClick={this.handleDisplayList}
-          className="button"
-          style={{ marginLeft: "auto", marginRight: "10px" }}
-        >
-          More
-        </a>
-
-        <div className="playground">
-          {this.state.choosen !== "" ? (
-            <Canvas
-              selected={this.state.choosen}
-              boxes={this.state.boxes}
-              handleDimension={this.handleDimension}
-              fontSize={this.state.fontSize}
+      <div
+        style={{
+          backgroundColor: "rgb(238, 235, 235)",
+          height: "600px",
+          width: "100%",
+        }}
+      >
+        <div className="app" key="1">
+          <h1 style={{ marginTop: "20px", marginBottom: "10px", wordSpacing: "10px" }}>
+            <img
+              src={factory}
+              style={{
+                width: "10vw",
+                maxWidth: "80px",
+                marginRight: "2vw",
+                transform: "scaleX(-1)"
+              }}
             />
-          ) : (
-            ""
-          )}
-          <div className="tool">
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              {this.state.choosen !== "" ? (
-                this.state.boxes.length <= 4 ? (
-                  <a
-                    className="button"
-                    onClick={this.handleText}
-                    style={{ marginBottom: "4vh" }}
-                  >
-                    Text Box
-                  </a>
-                ) : (
-                  ""
-                )
-              ) : (
-                ""
-              )}
+            MEME FACTORY
+            <img
+              src={factory}
+              style={{ width: "10vw", maxWidth: "80px", marginLeft: "2vw" }}
+            />
+          </h1>
+          <Scroller
+            memes={this.state.displayList}
+            handleSelection={this.handleSelection}
+          />
 
-              <a
-                onClick={this.handleDownload}
-                style={{ marginBottom: "4vh" }}
-                className="prepare button"
-                id = "generate"
-              >
-                <span id="generate-txt">Generate Meme</span>
-              </a>
-            </div>
+          <a
+            variant="contained"
+            color="primary"
+            onClick={this.handleDisplayList}
+            className="button"
+            style={{
+              marginLeft: "auto",
+              marginRight: "10px",
+              marginTop: "4vh",
+            }}
+          >
+            More
+          </a>
+
+          <div className="playground">
             {this.state.choosen !== "" ? (
-              <Form
+              <Canvas
+                selected={this.state.choosen}
                 boxes={this.state.boxes}
-                handleInput={this.handleInput}
+                handleDimension={this.handleDimension}
                 fontSize={this.state.fontSize}
-                handleFontSize={this.handleFontSize}
               />
             ) : (
               ""
             )}
+            <div className="tool">
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {this.state.choosen !== "" ? (
+                  this.state.boxes.length <= 4 ? (
+                    <a
+                      className="button"
+                      onClick={this.handleText}
+                      style={{
+                        marginBottom: "4vh",
+                        marginTop: "4vh",
+                        marginRight: "2vh",
+                      }}
+                    >
+                      Text Box
+                    </a>
+                  ) : (
+                    ""
+                  )
+                ) : (
+                  ""
+                )}
+
+                <a
+                  onClick={this.handleDownload}
+                  className="prepare button"
+                  id="generate"
+                >
+                  <span id="generate-txt">Generate Meme</span>
+                </a>
+              </div>
+              {this.state.choosen !== "" ? (
+                <Form
+                  boxes={this.state.boxes}
+                  handleInput={this.handleInput}
+                  fontSize={this.state.fontSize}
+                  handleFontSize={this.handleFontSize}
+                />
+              ) : (
+                ""
+              )}
+            </div>
           </div>
-        </div>
-        <h1 className="download">Result</h1>
-        <div className="download">
-          <img src={this.state.url} alt="" width="100%" />
+          <h1 className="download">Result</h1>
+          <div className="download">
+            <img src={this.state.url} alt="" width="100%" />
+          </div>
         </div>
       </div>
     );

@@ -8,7 +8,7 @@ const Form = ({boxes, handleInput, fontSize, handleFontSize}) => {
         const inputTab = boxes.map((obj, ind) => {
           const txt = `Text ${ind+1}`
           return (
-            <div style={{ display: "flex", alignItems: "center", marginBottom: "2vh" }}>
+            <div style={{ display: "flex", alignItems: "center", marginBottom: "2vh", justifyContent: "space-evenly" }}>
               <TextField
                 id="outlined-basic"
                 label={txt}
@@ -18,6 +18,7 @@ const Form = ({boxes, handleInput, fontSize, handleFontSize}) => {
                 id={ind}
                 key={ind}
                 variant="outlined"
+                style={{width: "40%"}}
               />
               <TextField
                 id="outlined-basic"
@@ -28,14 +29,14 @@ const Form = ({boxes, handleInput, fontSize, handleFontSize}) => {
                 label="size"
                 value={fontSize[ind]}
                 onChange={handleFontSize}
-                style={{ marginLeft: "2vw" }}
+                // style={{ marginLeft: "2vw" }}
                 style={{
                   // padding: "3px",
                   // backgroundColor: "rgb(214, 214, 214)",
                   padding:"0px",
                 
                   marginLeft: "2vw",
-                  width: "50px",
+                  width: "30%",
                   marginRight: "2vw",
                 }}
               />
@@ -49,6 +50,7 @@ const Form = ({boxes, handleInput, fontSize, handleFontSize}) => {
                 min="5"
                 max="60"
                 title={fontSize[ind]}
+                style={{width: "30%", marginRight: "3vw"}}
               />
             </div>
           );
